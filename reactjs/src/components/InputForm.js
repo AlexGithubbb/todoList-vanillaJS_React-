@@ -6,8 +6,9 @@ const InputForm = props => {
       <form onSubmit={e => props.addTodo(e)}>
         <input
           type='text'
-          value={props.input}
-          onChange={e => props.getInput(e)}
+          ref={props.inputRef}
+          // value={props.input}
+          // onChange={e => props.getInput(e)}
         />
       </form>
     </div>

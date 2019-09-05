@@ -1,27 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import './App.css';
 import InputForm from './components/InputForm';
 import TodoItems from './components/TodoItems';
 
 class App extends Component {
   state = {
-    input: '',
+    // input: ''
     todos: []
   };
+  inputRef = createRef();
 
-  getInput = e => {
-    // console.log(e.target.value);
-    const newInput = e.target.value;
-    this.setState({ input: newInput });
-  };
+  // getInput = e => {
+  //   // console.log(e.target.value);
+  //   const newInput = e.target.value;
+  //   this.setState({ input: newInput });
+  // };
 
   addTodo = e => {
     e.preventDefault();
     // console.log('submited');
-    if (this.state.input !== '') {
+    if (this.inputRef.current.value !== '') {
       const newTodos = [...this.state.todos];
-      newTodos.push(this.state.input);
-      this.setState({ todos: newTodos, input: '' });
+      newTodos.push(this.inputRef.current.value);
+      this.setState({ todos: newTodos });
+      this.inputRef.current.value = null;
     }
   };
 
@@ -45,8 +47,9 @@ class App extends Component {
     return (
       <div className='App'>
         <InputForm
+          inputRef={this.inputRef}
           addTodo={this.addTodo}
-          getInput={this.getInput}
+          // getInput={this.getInput}
           input={this.state.input}
         />
         <TodoItems removeTodo={this.removeTodo} todos={this.state.todos} />
