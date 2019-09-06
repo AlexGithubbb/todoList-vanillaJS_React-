@@ -1,33 +1,51 @@
-import React, { useRef, useState } from 'react';
-import './App.css';
-import InputForm from './components/InputForm2';
-import TodoItems from './components/TodoItems';
+import React, { useState } from 'react';
+import InputForm from './Hookcomponents/InputForm';
+import Items from './Hookcomponents/Items';
 
-const App = () => {
-  const [todos, setTodos] = useState([]);
-  const text = useRef('');
+const AppHooks = () => {
+  const [inputs, setInputs] = useState({ name: '', email: '' });
+  const [infos, setInfos] = useState([]);
 
-  const addTodo = e => {
-    e.preventDefault();
-    // console.log('submited');
-    if (text.current.value !== '') {
-      const newTodos = [...todos];
-      newTodos.push(text.current.value);
-      setTodos(newTodos);
-      text.current.value = null;
-    }
+  // get inputs
+  const changeHandler = e => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
   };
 
-  const removeTodo = id => {
-    setTodos(() => todos.filter((todo, i) => i !== id));
+  // add item
+  const submitHandler = e => {
+    e.preventDefault();
+    // console.log(inputs);
+    // add inputs into infos(list)
+    if (inputs.email !== '' && inputs.name !== '') {
+      setInfos([...infos, inputs]);
+    }
+    return null;
+  };
+
+  // remove item
+  const removeItem = id => {
+    // copy state inputs
+    const updatedInfos = [...infos];
+    // delete the specific item from list
+    updatedInfos.splice(id, 1);
+    setInfos(updatedInfos);
   };
 
   return (
-    <div className='App'>
-      <InputForm inputRef={text} addTodo={addTodo} />
-      <TodoItems removeTodo={removeTodo} todos={todos} />
+    <div style={center}>
+      <InputForm
+        inputs={inputs}
+        submitHandler={submitHandler}
+        changeHandler={changeHandler}
+      />
+      <Items infos={infos} removeItem={removeItem} />
     </div>
   );
 };
 
-export default App;
+const center = {
+  textAlign: 'center'
+};
+
+export default AppHooks;

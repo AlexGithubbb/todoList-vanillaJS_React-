@@ -1,5 +1,5 @@
 import React from 'react';
-import TodoItem from './TodoItem';
+import TodoItem from './Todo';
 
 const TodoItems = ({ todos, removeTodo }) => {
   const todoItems = todos.map((todo, i) => {

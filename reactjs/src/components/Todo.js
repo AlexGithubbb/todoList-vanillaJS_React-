@@ -4,7 +4,7 @@ const TodoItem = ({ todo, id, removeTodo }) => {
   return (
     <Fragment>
       <li>
-        {todo}
+        {todo.toUpperCase()}
         <i className='fas fa-trash' onClick={() => removeTodo(id)} />
       </li>
     </Fragment>

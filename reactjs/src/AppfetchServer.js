@@ -61,10 +61,9 @@ class AppfetchServer extends Component {
           />
         </form>
         <ul>
-          {todos.map((todo, i) => (
+          {todos.map(todo => (
             <TodoItem
-              key={i}
-              id={todo.id}
+              key={todo.id}
               todo={todo.single}
               removeTodo={this.deleteTodo}
             />

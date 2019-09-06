@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
 import InputForm from './componentsFetch2/InputForm';
 import Todos from './componentsFetch2/Todos';
+import ErrorBoundary from './ErrorBoundary';
 
 class AppfetchServer2 extends Component {
   state = {
@@ -12,6 +13,7 @@ class AppfetchServer2 extends Component {
   async componentDidMount() {
     const res = await fetch('/todos');
     const data = await res.json();
+    // throw new Error();
     this.setState({ todos: data });
   }
 
@@ -53,13 +55,16 @@ class AppfetchServer2 extends Component {
     const { todos } = this.state;
     return (
       <div>
-        <InputForm
-          inputRef={this.inputRef}
-          // input={input}
-          // onChange={this.onChange}
-          addTodo={this.addTodo}
-        />
-        <Todos todos={todos} removeTodo={this.removeTodo} />
+        <ErrorBoundary>
+          <InputForm
+            inputRef={this.inputRef}
+            // input={input}
+            // onChange={this.onChange}
+            addTodo={this.addTodo}
+          />
+
+          <Todos todos={todos} removeTodo={this.removeTodo} />
+        </ErrorBoundary>
       </div>
     );
   }
